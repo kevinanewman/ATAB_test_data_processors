@@ -959,14 +959,14 @@ delete( sprintf('%s*.pdf',cont_fldr));
 delete( sprintf('%scontour_merge_*.pdf',out_fldr));
 
 %% Zip all EMF files into one package
-waitbar(0.0, waitbar_hand, 'Zip EMF Output Files');
+% waitbar(0.0, waitbar_hand, 'Zip EMF Output Files');
 
-out_file = sprintf( '%s%s - Plot EMFs.zip',out_fldr, out_name);
+% out_file = sprintf( '%s%s - Plot EMFs.zip',out_fldr, out_name);
 
-fprintf('Zipping Plot Image EMFs (%s)\n',out_file);
-zip(out_file,{'*.emf';'Contour Plots\*.emf'},out_fldr);
+% fprintf('Zipping Plot Image EMFs (%s)\n',out_file);
+% zip(out_file,{'*.emf';'Contour Plots\*.emf'},out_fldr);
 
-waitbar(1.0, waitbar_hand);
+% waitbar(1.0, waitbar_hand);
 
 %% Clean Up
 

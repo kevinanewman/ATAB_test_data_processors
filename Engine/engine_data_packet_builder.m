@@ -1096,7 +1096,7 @@ e = template_parser(parse_format, read_txt, 'Engine Spec');
 
 e.name = sprintf( '%s %s %0.1fL %s', e.model_year, e.manufacturer, e.displacement_L, e.model);
 
-e.citation = ['SUGGESTED CITATION: ' e.name ' Engine ' e.fuel ' - Test Data Package. Version ' char(datetime(date,'Format','y-MM')) '. Ann Arbor, MI: US EPA, National Vehicle and Fuel Emissions Laboratory, National Center for Advanced Technology, ' char(datetime(date,'Format','y')), '.'];
+e.citation = ['SUGGESTED CITATION: ' e.name ' Engine ' e.fuel ' - Test Data Package. Version ' char(datetime(date,'Format','y-MM')) '. Ann Arbor, MI: US EPA, National Vehicle and Fuel Emissions Laboratory, Advanced Technology Assessment Branch, ' char(datetime(date,'Format','y')), '.'];
 e.plot_title = [e.name ' Engine ' e.fuel ' - Test Data Plots'];
 
 

@@ -945,7 +945,7 @@ for l = 1:length(out_file_labels)
 	end
 	
 	% Create Legend
-	create_legend_page(eMachine, legend_data_types,  format_path ,legend_pdf,  true, out_file_label, show_figs );	
+	create_legend_page(eMachine, legend_data_types, format_path, legend_pdf, true, out_file_label, show_figs);
 		
 	% Merge all the files
 	merge_pdfs( pdf_list, out_fldr, out_file, processor_folder );

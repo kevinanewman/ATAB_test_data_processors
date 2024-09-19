@@ -30,7 +30,7 @@ xls.format('D1','ColWidth',35);
 
 xls.write({'Name','Units','Description','Measurement Type & Status *'}, 'A4');
 xls.format( 'A4', 'RowHeight', 20 );
-xls.format( 'A2', 'RowHeight', 20 );
+xls.format( 'A2', 'RowHeight', 0 );
 xls.write(data.Properties.VariableDescriptions', 'A5');
 xls.write(data.Properties.VariableUnits', 'B5');
 xls.write({AddProps.description}', 'C5');
@@ -46,8 +46,8 @@ xls.format( 'all','HorizAlign','Center');
 xls.format( xlsrange( 'C', 5, 1,num_entries),'HorizAlign','Left');
 
 xls.write({'Version:'},'D1')
-xls.write({char(datetime(date,'Format','MM-dd-yy'))},'D2')
-xls.format('D2','NumberFormat', 'MM-dd-yy');
+xls.write({char(datetime(date,'Format','MM-dd-yy'))},'D3')
+xls.format('D3','NumberFormat', 'MM-dd-yy');
 
 xls.write({[emachine.name, ' - '  output_type_label, ' Data']},'A1')
 xls.format(xlsrange( 'A', 1, 3), 'MergeCells',true,'FontSize',16,'FontBold',true);

@@ -24,7 +24,8 @@ xls.write_table(data,'A4','VariableNames','description','VariableUnits','line');
 col_width = max(9, 60/width(data));
 xls.format('all','HorizAlign','Center','ColWidth',col_width,'RowHeight',18);
 
-xls.format('A1:A2', 'RowHeight', 22 );
+xls.format('A1', 'RowHeight', 22 );
+xls.format('A2', 'RowHeight', 0 );
 xls.format('A3', 'RowHeight', 36 );
 xls.format('A4', 'RowHeight', 44 );
 xls.format( 'A6', 'FreezePane' );
@@ -53,12 +54,12 @@ xls.format( xlsrange('A',1,num_cols-1,3), 'LineStyle','Continuous');
 xls.format( xlsrange(num_cols,1,1,3), 'OuterLineStyle','Continuous');
 
 % Version
-xls.write({'Version:'},xlsrange( num_cols, 1))
-xls.write({char(datetime(date,'Format','MM-dd-yy'))},xlsrange( num_cols, 2))
-xls.format(xlsrange( num_cols, 2), 'NumberFormat', 'MM-dd-yy');
+xls.write({'Version:'}, xlsrange(num_cols, 1))
+xls.write({char(datetime(date,'Format','MM-dd-yy'))},xlsrange(num_cols, 3))
+xls.format(xlsrange(num_cols, 3), 'NumberFormat', 'MM-dd-yy');
 
 % Title Block
-xls.write({[emachine.name, ' emachine - ', select, ' Data']},'A1')
+xls.write({[emachine.name, ' - ', select, ' Data']},'A1')
 xls.format(xlsrange( 'A', 1, num_cols-1), 'MergeCells',true,'FontSize',16,'FontBold',true);
 
 % Citation Block

@@ -1054,8 +1054,8 @@ e = template_parser(parse_format, read_txt, 'eMachine Spec');
 
 e.name = sprintf( '%s %s %s', e.model_year, e.manufacturer, e.model);
 
-e.citation = ['SUGGESTED CITATION: ' e.name ' - Test Data Package. Version ' char(datetime(date,'Format','y-MM')) '. Ann Arbor, MI: US EPA, National Vehicle and Fuel Emissions Laboratory, National Center for Advanced Technology, ' char(datetime(date,'Format','y')), '.'];
-e.plot_title = [e.name ' eMachine - Test Data Plots'];
+e.citation = ['SUGGESTED CITATION: ' e.name ' - Test Data Package. Version ' char(datetime(date,'Format','y-MM')) '. Ann Arbor, MI: US EPA, National Vehicle and Fuel Emissions Laboratory, Advanced Technology Assessment Branch, ' char(datetime(date,'Format','y')), '.'];
+e.plot_title = [e.name ' - Test Data Plots'];
 
 
 %get wot

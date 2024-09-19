@@ -162,7 +162,7 @@ parse_format = cell2struct({
 	'Output Name',					'output_name',				'text',		true;
 	'Output Units',					'output_units',				'text',		true;
 	'Description',					'description',				'text',		false;
-	'MEASUREMENT TYPE & STATUS',	'calibration_status',		'text',		false;
+	'MEASUREMENT TYPE & STATUS DESCRIPTION',	'calibration_status',		'text',		true;
 	'Display Precision',			'display_precision',		'numeric',	false;
 	'Core Data',					'core_data',				'bool',		true;
 	'Full Data',					'full_data',				'bool',		true;

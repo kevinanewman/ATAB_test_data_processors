@@ -125,7 +125,7 @@ waitbar(0, waitbar_hand, 'Parsing Template - eMachine Spec');
 eMachine = read_eMachine_spec(format_xls);
 
 %% Set Output Folder & Clean it out
-out_name = [eMachine.name,' eMachine '];
+out_name = eMachine.name;
 
 %% Set location of processor folder (for pdftk & template file)
 if isdeployed

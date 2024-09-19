@@ -33,7 +33,7 @@ end
 
 %% Title
 t = annotation('textbox');
-t.String = sprintf('%s %s - %s Data Plots', emachine.name, title_append);
+t.String = sprintf('%s - %s Data Plots', emachine.name, title_append);
 % t.String = 'Legend & Notes';
 t.Position = [t_margin, 0.90, t_width, 0.05];
 t.FontSize = 20;

@@ -1,0 +1,170 @@
+<deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
+  <configuration build-checksum="1251875186" file="D:\Work\Engine Data Processor\engine_data_packet_builder.prj" location="D:\Work\Engine Data Processor" name="engine_data_packet_builder" preferred-package-location="D:\Work\Engine Data Processor\engine_data_packet_builder\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
+    <param.appname>engine_data_packet_builder</param.appname>
+    <param.icon />
+    <param.icons />
+    <param.version>1.24</param.version>
+    <param.authnamewatermark />
+    <param.email />
+    <param.company>US EPA</param.company>
+    <param.summary />
+    <param.description />
+    <param.screenshot />
+    <param.guid />
+    <param.installpath.string>\US EPA\engine_data_packet_builder\</param.installpath.string>
+    <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
+    <param.logo />
+    <param.install.notes />
+    <param.target.install.notes />
+    <param.intermediate>${PROJECT_ROOT}\engine_data_packet_builder\for_testing</param.intermediate>
+    <param.files.only>${PROJECT_ROOT}\engine_data_packet_builder\for_redistribution_files_only</param.files.only>
+    <param.output>${PROJECT_ROOT}\engine_data_packet_builder\for_redistribution</param.output>
+    <param.logdir>${PROJECT_ROOT}\engine_data_packet_builder</param.logdir>
+    <param.enable.clean.build>false</param.enable.clean.build>
+    <param.user.defined.mcr.options />
+    <param.embed.ctf>true</param.embed.ctf>
+    <param.target.type>subtarget.standalone</param.target.type>
+    <param.support.packages />
+    <param.web.mcr>true</param.web.mcr>
+    <param.package.mcr>false</param.package.mcr>
+    <param.no.mcr>false</param.no.mcr>
+    <param.web.mcr.name>MyAppInstaller_web</param.web.mcr.name>
+    <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
+    <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
+    <param.windows.command.prompt>false</param.windows.command.prompt>
+    <param.create.log>false</param.create.log>
+    <param.log.file />
+    <unset>
+      <param.icon />
+      <param.icons />
+      <param.authnamewatermark />
+      <param.email />
+      <param.summary />
+      <param.description />
+      <param.screenshot />
+      <param.guid />
+      <param.installpath.string />
+      <param.installpath.combo />
+      <param.logo />
+      <param.target.install.notes />
+      <param.intermediate />
+      <param.files.only />
+      <param.output />
+      <param.logdir />
+      <param.enable.clean.build />
+      <param.user.defined.mcr.options />
+      <param.embed.ctf />
+      <param.target.type />
+      <param.support.packages />
+      <param.web.mcr />
+      <param.package.mcr />
+      <param.no.mcr />
+      <param.web.mcr.name />
+      <param.package.mcr.name />
+      <param.no.mcr.name />
+      <param.create.log />
+      <param.log.file />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}\engine_data_packet_builder.m</file>
+    </fileset.main>
+    <fileset.resources />
+    <fileset.package>
+      <file>${PROJECT_ROOT}\libiconv2.dll</file>
+      <file>${PROJECT_ROOT}\pdftk.exe</file>
+    </fileset.package>
+    <fileset.depfun>
+      <file>${PROJECT_ROOT}\add_base_calcs.m</file>
+      <file>${PROJECT_ROOT}\add_continuous_calcs.m</file>
+      <file>${PROJECT_ROOT}\add_custom_calcs.m</file>
+      <file>${PROJECT_ROOT}\add_injector_flow.m</file>
+      <file>${PROJECT_ROOT}\add_plot_date.m</file>
+      <file>${PROJECT_ROOT}\apply_limits.m</file>
+      <file>${PROJECT_ROOT}\best_contour.m</file>
+      <file>${PROJECT_ROOT}\calc_continuous_stats.m</file>
+      <file>${PROJECT_ROOT}\calc_point_stats.m</file>
+      <file>${PROJECT_ROOT}\check_transient_stability.m</file>
+      <file>${PROJECT_ROOT}\compute_injector_cal.m</file>
+      <file>${PROJECT_ROOT}\conditional.m</file>
+      <file>${PROJECT_ROOT}\convert_units.m</file>
+      <file>${PROJECT_ROOT}\create_contour_plots.m</file>
+      <file>${PROJECT_ROOT}\create_legend_page.m</file>
+      <file>${PROJECT_ROOT}\data_bound.m</file>
+      <file>${PROJECT_ROOT}\format_data_columns.m</file>
+      <file>${PROJECT_ROOT}\gen_avg_curve.m</file>
+      <file>${PROJECT_ROOT}\inj_cal_type.m</file>
+      <file>${PROJECT_ROOT}\load_data_file.m</file>
+      <file>${PROJECT_ROOT}\make_wildcard_replacement.m</file>
+      <file>${PROJECT_ROOT}\make_wildcard_search_str.m</file>
+      <file>${PROJECT_ROOT}\parse_units.m</file>
+      <file>${PROJECT_ROOT}\plot_continuous_data.m</file>
+      <file>${PROJECT_ROOT}\plot_data_points.m</file>
+      <file>${PROJECT_ROOT}\plot_patch.m</file>
+      <file>${PROJECT_ROOT}\print_pdf_usletter_landscape.m</file>
+      <file>${PROJECT_ROOT}\process_high_load.m</file>
+      <file>${PROJECT_ROOT}\process_max_torque.m</file>
+      <file>${PROJECT_ROOT}\process_min_torque.m</file>
+      <file>${PROJECT_ROOT}\stable_check.m</file>
+      <file>${PROJECT_ROOT}\template_parser.m</file>
+      <file>${PROJECT_ROOT}\write_data_tab.m</file>
+      <file>${PROJECT_ROOT}\write_param_tab.m</file>
+      <file>D:\Work\Matlab_Common\dev\Import\readtable2.m</file>
+      <file>D:\Work\Matlab_Common\extern\RegularizeData3D\RegularizeData3D.m</file>
+      <file>D:\Work\Matlab_Common\extern\xlscol\xlscol.m</file>
+      <file>D:\Work\Matlab_Common\pub\Datatypes\convert.m</file>
+      <file>D:\Work\Matlab_Common\pub\Export\print_emf.m</file>
+      <file>D:\Work\Matlab_Common\pub\Export\print_pdf_usletter_portrait.m</file>
+      <file>D:\Work\Matlab_Common\pub\Export\xlseditor.m</file>
+      <file>D:\Work\Matlab_Common\pub\Export\xlsrange.m</file>
+      <file>D:\Work\Matlab_Common\pub\Functions\coefvar.m</file>
+      <file>D:\Work\Matlab_Common\pub\Functions\gettableunits.m</file>
+      <file>D:\Work\Matlab_Common\pub\Functions\istablevar.m</file>
+      <file>D:\Work\Matlab_Common\pub\Functions\nrmtile.m</file>
+      <file>D:\Work\Matlab_Common\pub\Functions\parse_varargs.m</file>
+      <file>D:\Work\Matlab_Common\pub\Functions\regexpcmp.m</file>
+      <file>D:\Work\Matlab_Common\pub\Functions\scatter2surf.m</file>
+      <file>D:\Work\Matlab_Common\pub\Functions\validate_arg.m</file>
+      <file>D:\Work\Matlab_Common\pub\Functions\wildcardcmp.m</file>
+      <file>D:\Work\Matlab_Common\pub\Graphics\powerlines.m</file>
+      <file>D:\Work\Matlab_Common\pub\Graphics\superplot.m</file>
+    </fileset.depfun>
+    <build-deliverables>
+      <file location="${PROJECT_ROOT}\engine_data_packet_builder\for_testing" name="engine_data_packet_builder.exe" optional="false">D:\Work\Engine Data Processor\engine_data_packet_builder\for_testing\engine_data_packet_builder.exe</file>
+      <file location="${PROJECT_ROOT}\engine_data_packet_builder\for_testing" name="splash.png" optional="false">D:\Work\Engine Data Processor\engine_data_packet_builder\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}\engine_data_packet_builder\for_testing" name="readme.txt" optional="true">D:\Work\Engine Data Processor\engine_data_packet_builder\for_testing\readme.txt</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\R2016b</root>
+      <toolboxes>
+        <toolbox name="fixedpoint" />
+        <toolbox name="matlabcoder" />
+      </toolboxes>
+      <toolbox>
+        <fixedpoint>
+          <enabled>true</enabled>
+        </fixedpoint>
+      </toolbox>
+      <toolbox>
+        <matlabcoder>
+          <enabled>true</enabled>
+        </matlabcoder>
+      </toolbox>
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>6.2</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>

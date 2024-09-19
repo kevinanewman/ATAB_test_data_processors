@@ -40,11 +40,11 @@ t.FontSize = 20;
 t.LineStyle = 'none';
 
 
-t = annotation('line');
-t.X = [t_margin/2,1-t_margin/2];
-t.Y = [0.90,0.90];
-t.Color = [0.25,0.44,0.75];
-t.LineWidth = 1;
+%t = annotation('line');
+%t.X = [t_margin/2,1-t_margin/2];
+%t.Y = [0.90,0.90];
+%t.Color = [0.25,0.44,0.75];
+%t.LineWidth = 1;
 
 %% Citation
 

@@ -72,7 +72,7 @@ test_pts = [xdata, ydata];
 repeat = [all(sort_pts(1:end-1,:) == sort_pts(2:end,:),2);false];
 
 if any(repeat)
-	warning('Redeated data points detected - replacing with average for contour plotting');
+	warning('Repeated data points detected - replacing with average for contour plotting');
 	repeat_pts = unique(test_pts(orig_idx(repeat),:),'rows');
 	remove_pts = false(size(xdata));
 	for p = 1:size(repeat_pts,1)
@@ -103,10 +103,10 @@ for var_idx = 1:width(indata)
 	zdata = indata{:,var_idx};
 	
 	if ~isnumeric(zdata) || ~isvector(zdata)
-        warning('Input data not a numeric vector: "%s"',zname);
+        warning('Skipping contour plot: Input data not a numeric vector: "%s"',zname);
         continue;
 	elseif all(isnan(zdata) | isinf(zdata))
-		warning('Input data contains no valid points: "%s"',zname);
+		warning('Skipping contour plot: Input data contains no valid points: "%s"',zname);
         continue;
 	end
 	
@@ -129,13 +129,13 @@ for var_idx = 1:width(indata)
 	zscat = zscat(~rmv);
 	    
 	if isempty(zscat)
-		warning('Input data contains no valid points: "%s"', zname);
+		warning('Skipping contour plot: Input data contains no valid points: "%s"', zname);
         continue;
 	elseif length( zscat ) < 3	
-		warning('Input data contains less than 3 valid points: "%s"', zname);
+		warning('Skipping contour plot: Input data contains less than 3 valid points: "%s"', zname);
         continue;
 	elseif var(zscat) == 0
-		warning('Input data is constant: "%s"', zname);
+		warning('Skipping contour plot: Input data is constant: "%s"', zname);
         continue;	
 	end
 	

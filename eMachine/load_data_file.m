@@ -130,7 +130,6 @@ for f = 1:numel(load_format)
 	
 	if ~isempty(out_units)
 		for var = 1:width(sel_data)
-			
 			in_var_name = sel_data.Properties.VariableDescriptions{var};
 			
 			if isnumeric(sel_data.(var))
@@ -150,8 +149,8 @@ for f = 1:numel(load_format)
 			sel_data.Properties.VariableUnits{var} = out_units;
 			
 		end
-		
-	end
+
+    end
 	
 	
 	% Grab ambient pressure to update future pressure measurements

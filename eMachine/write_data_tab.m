@@ -67,7 +67,4 @@ xls.write({emachine.citation},'A3')
 xls.format( 'A3', 'RowHeight', 45 );
 xls.format( xlsrange('A', 3, num_cols-1), 'MergeCells',true,'WrapText',true);
 
-
-
-
 end

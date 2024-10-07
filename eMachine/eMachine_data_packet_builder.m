@@ -634,7 +634,7 @@ for l = 1:length(template_labels)
     out_file_label = out_file_labels{l};
     out_filename = [out_fldr,out_name,' - ', out_file_label, ' Data.xlsx',];    
 	
-	fprintf('Creating %s Data File (%s)\n',template_label, out_filename);
+	fprintf('\nCreating %s Data File (%s)\n',template_label, out_filename);
 	   
 	waitbar(0.0, waitbar_hand, ['Writing ', out_file_label, ' Data Spreadsheet']);
 	
@@ -751,8 +751,6 @@ for l = 1:length(template_labels)
 	
 end
 
-
-
 %% Create Contour Plot Sets
 
 waitbar(0.0, waitbar_hand, ['Creating Contour Plots']);
@@ -778,39 +776,6 @@ if isempty( contour_sets)
     contour_sets(1).label = 'Steady State';
 end
 
-% if all(ismember( {'HL-final','HL-initial'},  merged_data.data_type ) )
-%     contour_sets(1).data_select(1).variable = 'data_type';
-%     contour_sets(1).data_select(1).values = {'SS AVG','SS CONT','SS AVG TXMN','HL-initial'};
-%     contour_sets(1).label = 'Steady State and High Load Initial';
-% 	
-% 	contour_sets(2).data_select(1).variable = 'data_type';
-%     contour_sets(2).data_select(1).values = {'SS AVG','SS CONT','SS AVG TXMN','HL-final'};
-%     contour_sets(2).label = 'Steady State and High Load Final';
-% else   
-%     contour_sets(1).data_select(1).variable = 'data_type';
-%     contour_sets(1).data_select(1).values = {'SS AVG','SS CONT','SS AVG TXMN','HL-final'};
-%     contour_sets(1).label = 'Steady State';
-% end
-
-
-if istablevar( merged_data,'cylinder_deac_bool')
-    %Duplicate to make with and without deac
-    deac_sets = contour_sets;
-    non_deac_sets = contour_sets;  
-    
-	for c = 1:length(contour_sets)        
-        deac_sets(c).data_select(end+1).variable = 'cylinder_deac_bool';
-        deac_sets(c).data_select(end).values = 1;
-        deac_sets(c).label = sprintf('%s - Cylinder Deactivation Enabled', contour_sets(c).label );
-        
-        non_deac_sets(c).data_select(end+1).variable = 'cylinder_deac_bool';
-        non_deac_sets(c).data_select(end).values = 0;
-        non_deac_sets(c).label = sprintf('%s - Cylinder Deactivation Disabled', contour_sets(c).label );      
-    end
-    
-    contour_sets =  [ non_deac_sets, deac_sets];    
-end
-
 select_vars = all(cellfun(@isnumeric, table2cell(merged_data)),1) & ( [merged_data.Properties.UserData.core_contour] | [merged_data.Properties.UserData.full_contour]) ;
 plot_data = merged_data(:,select_vars);
 plot_data.Properties.UserData = plot_data.Properties.UserData(select_vars);
@@ -834,7 +799,7 @@ for c = 1:length(contour_sets)
 	end
     	
     nice_label = regexprep( contour_set.label, '\s*',' ');
-    fprintf('Creating %s Contour Plot Set\n',nice_label);
+    fprintf('\nCreating %s Contour Plot Set\n',nice_label);
     waitbar(0.0, waitbar_hand, ['Creating ', nice_label, ' Contour Plots']);
 	
     % Make contour plots

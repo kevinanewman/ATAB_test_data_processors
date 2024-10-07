@@ -8,7 +8,7 @@ data_edits = data_edits([]);
 % table({''},{''},{''},{''},{''},{''},'VariableNames',{'file','test_number','mode_number','signal','action','comment'});
 % data_edits = data_edits([],:);
 
-fprintf('Loading Data: %s\n', file_info.file);
+fprintf('\nLoading Data: %s\n', file_info.file);
 
 % Use 98 kPa as default barometric pressure adjustment
 baro = [];

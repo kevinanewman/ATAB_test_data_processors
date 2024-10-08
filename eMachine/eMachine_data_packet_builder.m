@@ -54,10 +54,6 @@ catch
 	end
 end
 
-
-
-
-
 if ~isdeployed
 	eMachine_data_packet_builder_core( format_file, show_figs )
 	
@@ -198,7 +194,7 @@ data_format = template_parser(parse_format, read_txt, 'Data Format');
 input_name_fields_idx = regexpcmp(headers, 'INPUT NAME.*','ignorecase');
 bad_format = false( length(data_format), 1);
 
-for f = 1:length(	data_format)
+for f = 1:length(data_format)
 	
 	% Clean up working name
 	data_format(f).working_name = strtrim( data_format(f).working_name);
@@ -263,9 +259,6 @@ working_name_empty = cellfun(@isempty, working_names);
 % Clean up any autofills that may have collided
 working_names = matlab.lang.makeUniqueStrings(working_names, working_name_empty ,63);
 
-if any( regexpcmp(working_names,'injector.*_pulse.*_duration_ms'))  && ( any( regexpcmp(working_names,'pfi.*_pulse.*_duration_ms')) || any( regexpcmp(working_names,'gdi.*_pulse.*_duration_ms')) )
-	error('Invalid template, injector data should contain prefix "injector" or "gdi" and/or "pfi".');
-end
 
 [data_format.working_name] = working_names{:};
 
@@ -722,126 +715,122 @@ end
 
 function merge_pdfs( in_pdfs, out_fldr, out_pdf, processor_folder )
 
-in_pdfs( cellfun(@isempty, in_pdfs)) = [];
+    in_pdfs( cellfun(@isempty, in_pdfs)) = [];
+    
+    if numel(in_pdfs) > 60
+	    
+	    contour_merge_pdfs ={};
+	    
+	    % Merge Files into groups of 50 to avoid command line length limits
+	    for chunk_start = 1:50:numel(in_pdfs)
+		    chunk_end = min(chunk_start + 49, numel(in_pdfs));
+		    chunk_pdfs = sprintf(' "%s"', in_pdfs{chunk_start:chunk_end});
+		    contour_merge_pdfs{end+1} = sprintf( '%scontour_merge_%03d.pdf',out_fldr, chunk_start);
+		    
+		    pdf_merge_command = sprintf( '"%spdftk" %s output "%s"',processor_folder, chunk_pdfs, contour_merge_pdfs{end} );
+		    [s,m] = system(pdf_merge_command);
+		    if s
+			    warning('PDF merge error %s',m);
+		    end
+	    end
+	    
+    else
+	    contour_merge_pdfs = in_pdfs;
+    end
+    
+    % Add quotes
+    contour_merge_pdfs = sprintf(' "%s"', contour_merge_pdfs{:});
+    
+    
+    % Merge all the files
+    pdf_merge_command = sprintf( '"%spdftk" %s output "%s%s"',processor_folder, contour_merge_pdfs ,out_fldr,out_pdf );
+    [s,m] = system(pdf_merge_command);
+    
+    if s
+	    warning('PDF merge error %s',m);
+    end
 
-if numel(in_pdfs) > 60
-	
-	contour_merge_pdfs ={};
-	
-	% Merge Files into groups of 50 to avoid command line length limits
-	for chunk_start = 1:50:numel(in_pdfs)
-		chunk_end = min(chunk_start + 49, numel(in_pdfs));
-		chunk_pdfs = sprintf(' "%s"', in_pdfs{chunk_start:chunk_end});
-		contour_merge_pdfs{end+1} = sprintf( '%scontour_merge_%03d.pdf',out_fldr, chunk_start);
-		
-		pdf_merge_command = sprintf( '"%spdftk" %s output "%s"',processor_folder, chunk_pdfs, contour_merge_pdfs{end} );
-		[s,m] = system(pdf_merge_command);
-		if s
-			warning('PDF merge error %s',m);
-		end
-	end
-	
-else
-	contour_merge_pdfs = in_pdfs;
 end
 
-% Add quotes
-contour_merge_pdfs = sprintf(' "%s"', contour_merge_pdfs{:});
-
-
-% Merge all the files
-pdf_merge_command = sprintf( '"%spdftk" %s output "%s%s"',processor_folder, contour_merge_pdfs ,out_fldr,out_pdf );
-[s,m] = system(pdf_merge_command);
-
-if s
-	warning('PDF merge error %s',m);
-end
-
-end
-
-
+%%
 function e = read_eMachine_spec(format_xls)
 
-
-format_xls.change_sheet('eMachine Spec');
-
-% [~,~, read_txt] = xlsread(format_file, );
-
-read_txt = format_xls.read;
-read_txt = read_txt(:,1:2)';
-
-parse_format = cell2struct({  
-	'Model Year'					'model_year',				'text'			true
-	'Manufacturer'					'manufacturer'				'text'			true
-	'Model / Family'                'model'                     'text'          true
-    'Number of Pole Pairs'			'pole_pairs'			    'numeric'		false
-	'Max Power [kW]'				'max_power_kW'				'numeric'		false
-	'Max Torque [Nm]'				'max_torque_Nm'				'numeric'		true
-	'Max Speed [RPM]'		        'max_speed_rpm'		        'numeric'		true
-    'Base Speed [RPM]'		        'base_speed_rpm'	        'numeric'		false
-	'Source Data Citation'			'source_citation'			'text'			false
-	'Message'						'message'					'text'			false }, ...
-	{'header',						'out_var',				'type',		'required'}, 2);
-
-e = template_parser(parse_format, read_txt, 'eMachine Spec');
-
-
-
-%% map input table data to eMachine struct
-
-e.name = sprintf( '%s %s %s', e.model_year, e.manufacturer, e.model);
-
-e.citation = ['SUGGESTED CITATION: ' e.name ' - Test Data Package. Version ' char(datetime(date,'Format','y-MM')) '. Ann Arbor, MI: US EPA, National Vehicle and Fuel Emissions Laboratory, Advanced Technology Assessment Branch, ' char(datetime(date,'Format','y')), '.'];
-e.plot_title = [e.name ' - Test Data Plots'];
-
-
-%get wot
-if ismember('Published WOT',format_xls.get_sheets)
-
-	format_xls.change_sheet('Published WOT');
-	read_txt = format_xls.read;
-	
-	parse_format = cell2struct({  
-	'Speed (rpm)'		'speed_rpm',	'numeric'		true
-	'Torque (Nm)'		'torque_Nm'		'numeric'		true }, ...
-	{'header',			'out_var',		'type',		'required'}, 2);
-
-	wot = template_parser(parse_format, read_txt, 'Published WOT');
-
-    e.published_wot_speed_rpm = [wot.speed_rpm]';
-    e.published_wot_torque_Nm = [wot.torque_Nm]';
-	power_kW = (e.published_wot_speed_rpm .* convert.rpm2radps .* e.published_wot_torque_Nm )/1000;
-	
-	if isempty( e.max_power_kW ) || isnan( e.max_power_kW)
-		[e.max_power_kW, idx] = max(power_kW );
-		e.max_power_speed_rpm = e.published_wot_speed_rpm(idx);
-	end
-	
-	if isempty( e.max_torque_Nm ) || isnan( e.max_torque_Nm)
-		[e.max_torque_Nm, idx] = max(e.published_wot_torque_Nm);
-		e.max_power_speed_rpm = e.published_wot_speed_rpm(idx);
-	end
-	
-else
-	e.published_wot_speed_rpm = [];
-    e.published_wot_torque_Nm = [];
-	
-end
+    format_xls.change_sheet('eMachine Spec');
+    
+    % [~,~, read_txt] = xlsread(format_file, );
+    
+    read_txt = format_xls.read;
+    read_txt = read_txt(:,1:2)';
+    
+    parse_format = cell2struct({  
+	    'Model Year'					'model_year',				'text'			true
+	    'Manufacturer'					'manufacturer'				'text'			true
+	    'Model / Family'                'model'                     'text'          true
+        'Number of Pole Pairs'			'pole_pairs'			    'numeric'		false
+	    'Max Power [kW]'				'max_power_kW'				'numeric'		false
+	    'Max Torque [Nm]'				'max_torque_Nm'				'numeric'		true
+	    'Max Speed [RPM]'		        'max_speed_rpm'		        'numeric'		true
+        'Base Speed [RPM]'		        'base_speed_rpm'	        'numeric'		false
+	    'Source Data Citation'			'source_citation'			'text'			false
+	    'Message'						'message'					'text'			false }, ...
+	    {'header',						'out_var',				'type',		'required'}, 2);
+    
+    e = template_parser(parse_format, read_txt, 'eMachine Spec');
+    
+    %% map input table data to eMachine struct
+    
+    e.name = sprintf( '%s %s %s', e.model_year, e.manufacturer, e.model);
+    
+    e.citation = ['SUGGESTED CITATION: ' e.name ' - Test Data Package. Version ' char(datetime(date,'Format','y-MM')) '. Ann Arbor, MI: US EPA, National Vehicle and Fuel Emissions Laboratory, Advanced Technology Assessment Branch, ' char(datetime(date,'Format','y')), '.'];
+    e.plot_title = [e.name ' - Test Data Plots'];
+        
+    %get wot
+    if ismember('Published WOT',format_xls.get_sheets)
+    
+	    format_xls.change_sheet('Published WOT');
+	    read_txt = format_xls.read;
+	    
+	    parse_format = cell2struct({  
+	    'Speed (rpm)'		'speed_rpm',	'numeric'		true
+	    'Torque (Nm)'		'torque_Nm'		'numeric'		true }, ...
+	    {'header',			'out_var',		'type',		'required'}, 2);
+    
+	    wot = template_parser(parse_format, read_txt, 'Published WOT');
+    
+        e.published_wot_speed_rpm = [wot.speed_rpm]';
+        e.published_wot_torque_Nm = [wot.torque_Nm]';
+	    power_kW = (e.published_wot_speed_rpm .* convert.rpm2radps .* e.published_wot_torque_Nm )/1000;
+	    
+	    if isempty( e.max_power_kW ) || isnan( e.max_power_kW)
+		    [e.max_power_kW, idx] = max(power_kW );
+		    e.max_power_speed_rpm = e.published_wot_speed_rpm(idx);
+	    end
+	    
+	    if isempty( e.max_torque_Nm ) || isnan( e.max_torque_Nm)
+		    [e.max_torque_Nm, idx] = max(e.published_wot_torque_Nm);
+		    e.max_power_speed_rpm = e.published_wot_speed_rpm(idx);
+	    end
+	    
+    else
+	    e.published_wot_speed_rpm = [];
+        e.published_wot_torque_Nm = [];
+	    
+    end
 
 end
 
-
+%%
 function data = sort_data_rows( data)
 
-data_sort = data(:,{'speed_rpm','torque_Nm'});
-data_sort.speed_rpm = 100* round(data.speed_rpm / 100);
-
-[~, sort_idx] = sortrows( [ 100* round(data.speed_rpm / 100), data.torque_Nm ] );
-data = data(sort_idx,:);
+    data_sort = data(:,{'speed_rpm','torque_Nm'});
+    data_sort.speed_rpm = 100* round(data.speed_rpm / 100);
+    
+    [~, sort_idx] = sortrows( [ 100* round(data.speed_rpm / 100), data.torque_Nm ] );
+    data = data(sort_idx,:);
 
 end
 
-
+%%
 function data = remove_blank_columns( data )
 
 	empty_vars = varfun( @isblankvar, data);

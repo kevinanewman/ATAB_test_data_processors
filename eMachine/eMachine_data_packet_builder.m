@@ -496,71 +496,7 @@ for l = 1:length(template_labels)
 	proc_test = proc_tests + sum(sel_tests);
 	waitbar(0.9*proc_test/total_tests , waitbar_hand);
 	
-	sel_tests = strcmpi( merged_data.data_type,'HL-initial');
-	if any(sel_tests)
-		fprintf(' - Writing High Load Transient Initial Data\n');
-		sel_data = sort_data_rows(select_data(sel_tests,:));
-		sel_data = remove_blank_columns( sel_data );
-		write_data_tab( out_xls, 'High Load Initial', sel_data, eMachine, out_file_label);
-	end
-	
-	proc_test = proc_tests + sum(sel_tests);
-	waitbar(0.9*proc_test/total_tests , waitbar_hand);
-	
-	sel_tests = strcmpi( merged_data.data_type,'HL-final');
-	if any(sel_tests)
-		fprintf(' - Writing High Load Transient Final Data\n');
-		sel_data = sort_data_rows(select_data(sel_tests,:));
-		sel_data = remove_blank_columns( sel_data );
-		write_data_tab( out_xls, 'High Load Final', sel_data, eMachine, out_file_label);
-	end
-	
-	proc_test = proc_tests + sum(sel_tests);
-	waitbar(0.9*proc_test/total_tests , waitbar_hand);
-	
-	sel_tests = strcmpi( merged_data.data_type,'MAX');
-	if any(sel_tests)
-		fprintf(' - Writing Maximum Torque Sweep Data\n');	
-		sel_vars = ismember(select_data.Properties.VariableNames, {'speed_rpm','torque_Nm','bmep_bar','meter_fuel_flow_gps','injector_fuel_flow_gps'} );
-		sel_data = sort_data_rows(select_data(sel_tests,sel_vars));
-		write_data_tab( out_xls, 'Max Torque Sweep', sel_data, eMachine, out_file_label);
-	end
 
-	proc_test = proc_tests + sum(sel_tests);
-	waitbar(0.9*proc_test/total_tests , waitbar_hand);
-	
-	sel_tests = strcmpi( merged_data.data_type,'MAX-raw');
-	if any(sel_tests) && strcmpi( template_label, 'FULL' ) 
-		fprintf(' - Writing Maximum Torque Sweep Raw Data\n');		
-		sel_data = sort_data_rows(select_data(sel_tests,:));
-		sel_data = remove_blank_columns( sel_data );
-		write_data_tab( out_xls, 'Max Torque Sweep - Raw', sel_data, eMachine, out_file_label);
-	end
-	
-	proc_test = proc_tests + sum(sel_tests);
-	waitbar(0.9*proc_test/total_tests , waitbar_hand);
-	
-	sel_tests = strcmpi( merged_data.data_type,'MIN');
-	if any(sel_tests)
-		fprintf(' - Writing Minimum Torque Sweep Data\n');	
-		sel_vars = ismember(select_data.Properties.VariableNames, {'speed_rpm','torque_Nm','bmep_bar','meter_fuel_flow_gps','injector_fuel_flow_gps'} );
-		sel_data = sort_data_rows(select_data(sel_tests,sel_vars));
-		write_data_tab( out_xls, 'Min Torque Sweep', sel_data, eMachine, out_file_label);
-	end
-	
-	proc_test = proc_tests + sum(sel_tests);
-	waitbar(0.9*proc_test/total_tests , waitbar_hand);
-
-	sel_tests = strcmpi( merged_data.data_type,'MIN-raw');
-	if any(sel_tests) && strcmpi( template_label, 'FULL' ) 
-		fprintf(' - Writing Minimum Torque Sweep Raw Data\n');		
-		sel_data = sort_data_rows(select_data(sel_tests,:));
-		sel_data = remove_blank_columns( sel_data );
-		write_data_tab( out_xls, 'Min Torque Sweep - Raw', sel_data, eMachine, out_file_label);
-	end
-	
-	waitbar(0.9, waitbar_hand);
-	
     % Generate parameter list tab with variable descriptions
 	fprintf(' - Writing Parameter List & Details\n');	
     write_param_tab( out_xls, 'Test Parameter List', select_data, eMachine, out_file_label)
@@ -625,7 +561,7 @@ for c = 1:length(contour_sets)
     waitbar(0.0, waitbar_hand, ['Creating ', nice_label, ' Contour Plots']);
 	
     % Make contour plots
-	out_pdf = create_contour_plots(merged_data.speed_rpm(sel_points), merged_data.torque_Nm(sel_points), merged_data.data_type(sel_points), plot_data(sel_points,:), plot_bound, cont_fldr, eMachine, max_torque_data, min_torque_data, contour_set.label, show_figs);
+	out_pdf = create_contour_plots(merged_data.speed_rpm(sel_points), merged_data.torque_Nm(sel_points), merged_data.data_type(sel_points), plot_data(sel_points,:), plot_bound, cont_fldr, eMachine, contour_set.label, show_figs);
     contour_pdfs = [contour_pdfs; out_pdf'];
 	
 end
@@ -738,7 +674,7 @@ for l = 1:length(out_file_labels)
 	test_mode_pdf = [out_fldr,'test_mode_temp.pdf'];
 	
 	if strcmpi( out_file_label, 'Full')
-		pdf_list = {legend_pdf, test_pts_pdf, test_number_pdf, test_mode_pdf, contour_pdf, max_torque_pdf, min_torque_pdf}';
+		pdf_list = {legend_pdf, test_pts_pdf, test_number_pdf, test_mode_pdf, contour_pdf}';
 		legend_data_types = unique(merged_data.data_type);	
 	else
 		pdf_list = {legend_pdf, test_pts_pdf, contour_pdf}';

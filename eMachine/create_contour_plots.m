@@ -1,4 +1,4 @@
-function  [out_pdf, out_emf] = create_contour_plots(xdata, ydata, point_type, indata, plot_bound, out_path, e, max_torque_data, min_torque_data , data_select, show_figs)
+function  [out_pdf, out_emf] = create_contour_plots(xdata, ydata, point_type, indata, plot_bound, out_path, e, data_select, show_figs)
 %%
 
 
@@ -28,16 +28,7 @@ data_bound_torque_Nm = ydata(bound_pts);
 %% Start with data point plot
 ax = plot_data_points(point_type,  xdata, ydata, e, plot_bound, show_figs );
 
-if ~isempty( max_torque_data )
-	superplot( max_torque_data.speed_rpm, max_torque_data.torque_Nm,8, 'lb--2' );
-end
-
-if ~isempty( min_torque_data )
-	superplot( min_torque_data.speed_rpm, min_torque_data.torque_Nm,8, 'lb--2' );
-end
-
 add_plot_date
-
 
 %% set up grid for interpolation
 % Evenly spaced grid with spacing determined in data area

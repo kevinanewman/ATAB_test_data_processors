@@ -39,25 +39,23 @@ function data  = add_base_calcs( data, data_format)
     torque_cal_uncertainty_Nm = get_cal_uncertainty(data_format, 'torque_Nm');
     torque_uncertainty_Nm = sqrt(torque_cal_uncertainty_Nm^2 + (data.HBM_trq_STD.^2)/60);
     
+    AC_cal_uncertainty_kW = get_cal_uncertainty(data_format, 'AC_power_kW');
     DC_cal_uncertainty_kW = get_cal_uncertainty(data_format, 'DC_power_kW');
 
     data.emot_eff_uncertainty_pct = sqrt(data.emot_eff_pct.^2 .* ...
-        ((speed_cal_uncertainty_rpm./data.speed_rpm).^2 + ...
-        (torque_uncertainty_Nm./data.torque_Nm).^2 + ...
-        (DC_cal_uncertainty_kW./data.DC_power_kW).^2));
+        ((speed_cal_uncertainty_rpm ./ data.speed_rpm).^2 + ...
+        (torque_uncertainty_Nm ./ data.torque_Nm).^2 + ...
+        (DC_cal_uncertainty_kW ./ data.DC_power_kW).^2));
 
-    % data.inverter_eff_uncertainty_pct = 0;
-    % data.emnot_eff_uncertainty_pct = 0;
+    data.motor_eff_uncertainty_pct = sqrt(data.motor_eff_pct.^2 .* ...
+        ((speed_cal_uncertainty_rpm ./ data.speed_rpm).^2 + ...
+        (torque_uncertainty_Nm ./ data.torque_Nm).^2 + ...
+        (AC_cal_uncertainty_kW ./ data.AC_power_kW).^2));
 
-    % FROM ENGINE add_base_calcs:
-    % uncertainty_num_pts = max(1, floor((data.record_duration) .* (data.speed_rpm / 120)));
-    % 
-    % uncertainty2_torque_Nm = get_rel_uncertainty2(data, data_format, 'torque_Nm', uncertainty_num_pts);
-    % uncertainty2_speed_rpm = get_rel_uncertainty2(data, data_format, 'speed_rpm', uncertainty_num_pts);
-    % 
-    % data.torque_uncertainty_Nm = sqrt(uncertainty2_torque_Nm);
-    % data.speed_uncertaintty_rpm = sqrt(uncertainty2_speed_rpm);
-
+    data.inverter_eff_uncertainty_pct = sqrt(data.inverter_eff_pct.^2 .* ...
+        ((DC_cal_uncertainty_kW ./ data.DC_power_kW).^2 + ...
+        (AC_cal_uncertainty_kW ./ data.AC_power_kW).^2));
+    
 end
 
 
